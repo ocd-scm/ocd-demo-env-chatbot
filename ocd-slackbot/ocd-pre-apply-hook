@@ -1,0 +1,4 @@
+#!/bin/bash
+set +x
+# run the defaults that will try to gpg decrypt any *.secret files it finds
+${OCD_SCRIPTS_PATH}/ocd-decrypt-secrets.sh

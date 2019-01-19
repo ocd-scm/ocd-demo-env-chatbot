@@ -1,0 +1,29 @@
+repositories:
+  - name: ocd-meta 
+    url: https://ocd-scm.github.io/ocd-meta/charts
+releases:
+  - name: {{ requiredEnv "ENV_PREFIX" }}-slackbot-secret
+    labels:
+      secret: {{ requiredEnv "ENV_PREFIX" }}-slackbot-secret
+    chart: ocd-meta/ocd-secret
+    version: ~1.0.0
+    values: 
+      - name: "slackbot-secret"
+      - "secret.yaml"
+  - name: {{ requiredEnv "ENV_PREFIX" }}-slackbot
+    labels: 
+      deployer: {{ requiredEnv "ENV_PREFIX" }}-slackbot
+    chart: ocd-meta/ocd-deployer
+    version: ~1.0.0
+    values:
+      - name: ocd-slackbot
+      - memory_limit: 128Mi
+      - replicas: 1
+      - imageStreamTag: "slackbot:{{ requiredEnv "OCD_TAG" }}"
+      - secrets: 
+        - name: "slackbot-secret"
+    hooks:
+    # FROM, TO, IMAGE, TAG
+    - events: ["prepare"]
+      command: "ocd-promote-imagestreamtag.sh"
+      args: ["uniqkey-eng", "uniqkey-slackbot", "slackbot", "{{ requiredEnv "OCD_TAG" }}" ]

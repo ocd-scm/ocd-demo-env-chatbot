@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# debug logging
+set +x
+
+# delete the unencrypted secrets
+${OCD_SCRIPTS_PATH}/ocd-delete-secrets.sh
+
+cowsay "All done!"
