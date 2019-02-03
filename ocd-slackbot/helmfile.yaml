@@ -6,7 +6,7 @@ releases:
     labels:
       secret: {{ requiredEnv "ENV_PREFIX" }}-slackbot-secret
     chart: ocd-meta/ocd-secret
-    version: ~1.0.0
+    version: "1.0.0-M1"
     values: 
       - name: "slackbot-secret"
       - "secret.yaml"
@@ -14,7 +14,7 @@ releases:
     labels: 
       deployer: {{ requiredEnv "ENV_PREFIX" }}-slackbot
     chart: ocd-meta/ocd-deployer
-    version: ~1.0.0
+    version: "1.0.0-M1"
     values:
       - name: ocd-slackbot
       - memory_limit: 128Mi
